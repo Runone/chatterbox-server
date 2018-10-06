@@ -109,5 +109,29 @@ describe('Node Server Request Listener Function', function() {
     expect(res._responseCode).to.equal(404);
     expect(res._ended).to.equal(true);
   });
+  
+  it('Should increament unique id every time a POST request is posted', function () {
+    var req = new stubs.request('classes/messages', 'POST');
+    var req = new stubs.response();
 
+    handler.requestHandler(req, res);
+    expect(messages[0].objectId.to.equal(0));
+    expect(messages[1].objectId.to.equal(1));
+  });
+  
+  it('Should add a unique id to our storage element', function () {
+    var req = new stubs.request('classes/messages', 'POST');
+    var req = new stubs.response();
+    
+    handler.requestHandler(req, res);
+    expect(messages.objectId.to.equal(true))
+  });
+
+    it('Should have a OPTIONS method', function() {
+      var req = new stubs.request('classes/messages', 'OPTIONS');
+      var req = new stubs.response();
+
+      hander.requestHandler(req, res);
+      expect(request.method.includes('OPTIONS').to.equal(true));
+    });
 });

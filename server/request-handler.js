@@ -50,6 +50,8 @@ var storage = {
   results: [] 
 };
 
+var id = 0;
+
 var requestHandler = function(request, response) {
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
   var statusCode = 200;
@@ -65,12 +67,16 @@ var requestHandler = function(request, response) {
         body += chunk;
       }).on('end', () => {
         let obj = JSON.parse(body);
+        id++;
+        obj['objectId'] = id;
+        console.log(obj);
         storage.results.push(obj);
         response.end(JSON.stringify(storage));
       });
     
     }  else if (request.method === 'GET' && request.url.includes('/classes/messages')) {
       response.writeHead(200, headers);
+      console.log(storage);
       // headers['Content-Type'] = 'application/json';
       response.end(JSON.stringify(storage));
     } else if (request.method === 'OPTIONS') {

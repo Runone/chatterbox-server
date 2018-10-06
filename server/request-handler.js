@@ -64,8 +64,8 @@ var requestHandler = function(request, response) {
       }).on('data', (chunk) => {
         body += chunk;
       }).on('end', () => {
-        JSON.parse(body);
-        storage.results.push(body);
+        let obj = JSON.parse(body);
+        storage.results.push(obj);
         response.end(JSON.stringify(storage));
       });
     
@@ -73,16 +73,12 @@ var requestHandler = function(request, response) {
       response.writeHead(200, headers);
       // headers['Content-Type'] = 'application/json';
       response.end(JSON.stringify(storage));
-    } 
-    else if (request.method = 'OPTIONS') {
+    } else if (request.method === 'OPTIONS') {
       response.writeHead(200, headers);
       response.end();
-    } 
-
-    else {
+    } else {
       response.writeHead(404, headers);
       response.end();
-    
     }
 };
   
